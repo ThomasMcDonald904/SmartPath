@@ -1,0 +1,11 @@
+#address_list_box {
+    font-family: monospace;
+    font-size: large;
+    border: solid 5px black;
+    width: 25%;
+    margin-top: 10px;
+}
+
+#address_list{
+    list-style-type: upper-alpha;
+}
