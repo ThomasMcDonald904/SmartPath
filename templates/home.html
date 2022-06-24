@@ -20,13 +20,14 @@
     <form method="post" name="address_form" onsubmit="return required()" action="route_submit" style="display: flex; flex-direction: column;">
         <div>
             <nav class="level">
-                <input type="text" class="input" placeholder="Entrer adresse" id="new_waypoint" class="">
+                <input type="text" class="input" placeholder="Entrer adresse" id="new_waypoint_address">
+                <input type="text" class="input", placeholder="Entrer ville de l'adresse" id="new_waypoint_city">
                 <button onclick="addNewWaypoint()" button btn-primary class="button" type="button" id="add-new-waypoint">Ajouter adresse</button>
             </nav>
         </div>
-        <div style="background: lightgray; min-height: 4rem;" name="waypoint-container" id="waypoint-container" class="is-flex is-flex-direction-column box">
+        <div style="background: lightgray; min-height: 4rem;" id="waypoint-container" class="is-flex is-flex-direction-column box">
         </div>
-        <input type="submit" class="button" name="Enter">
+        <input type="submit" class="button">
     </form>
 </body>
 </html>

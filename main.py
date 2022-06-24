@@ -13,13 +13,20 @@ def home():
 
 @app.route("/route_submit", methods=["GET", "POST"])
 def routing_form():
-    print(request.form)
+    starting_address = request.form.get("is_starting_destination")
+    temp_form = list(request.form.items())
+    # print(temp_form)
+    temp_form = [item for item in temp_form if not item[0] == "is_starting_destination" and not item[0] == "Enter"]
+    length = len(temp_form)
+    address_city_pairs = [[temp_form[i][1], temp_form[i+1][1]] for i in range(0, length-1, 2)] 
+
+    waypoint_list = []
+    for pair in address_city_pairs:
+        waypoint_list.append(address_to_lonlat(pair[0], pair[1]))
     
-    # address_list = []
-    # for i in request.form:
-    #     address_list.append(request.form.get(i))
-    # address_list.remove("Submit")
-    
-    # Make this render good thing
-    return render_template("home.html")
+    print(waypoint_list)
+
+    # json_data = generate_waypoints_json()
+
+    return render_template("login.html")
     

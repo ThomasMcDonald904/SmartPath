@@ -1,6 +1,7 @@
 # Developped by Thomas McDonald in collaboration with Mathys Marcouiller
 # GitHub: https://github.com/ThomasMcDonald904
 
+import json
 import requests
 import urllib.parse
 
@@ -19,8 +20,9 @@ def address_to_lonlat(_address: str, _city: str, api_key=tomtom_api_key):
         if i["type"] == "Point Address" and i["address"]["municipality"] == _city:
             user_address_lon_lat = i["position"]
 
-    formatted_lon_lat = urllib.parse.quote(f"{user_address_lon_lat['lat']},{user_address_lon_lat['lon']}")
-    return formatted_lon_lat
+    # formatted_lon_lat = urllib.parse.quote(f"{user_address_lon_lat['lat']},{user_address_lon_lat['lon']}")
+    # return user_address_lon_lat['lat'], user_address_lon_lat['lon']
+    return {"point": {"latitude": user_address_lon_lat["lat"], "longitude": user_address_lon_lat["lon"]}}
 
 
 def lon_lat_to_address(lon_lat_dict, api_key=tomtom_api_key):
@@ -31,11 +33,14 @@ def lon_lat_to_address(lon_lat_dict, api_key=tomtom_api_key):
     data = response.json()
     return data
 
+def generate_waypoints_json(*waypoints):
+    data = {"waypoints": [point for point in waypoints], "options": {"travelMode": "car", "vehicleCommercial": False, "waypointConstraints": {"originIndex": 0}}}
+    json_data = json.loads(data)
+    return json_data
 
-def get_route(*formatted_addresses, api_key=tomtom_api_key):
-    address_list = "%3A".join(formatted_addresses)
-    api_call_route = f"https://api.tomtom.com/routing/1/calculateRoute/{address_list}/json?instructionsType=text&computeBestOrder=true&key={api_key}"
-    response = requests.request("GET", api_call_route)
+def get_route(json_data, api_key=tomtom_api_key):
+    api_call_route = f"https://api.tomtom.com/routing/waypointoptimization/1?key={api_key}"
+    response = requests.post(api_call_route, json_data)
     data = response.json()
     return data
 
