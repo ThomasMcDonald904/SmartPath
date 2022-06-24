@@ -17,14 +17,14 @@
 </head>
 <body class="container is-max-desktop">
     <h1 class="title is-2">Smart Path</h1>
-    <form method="post" action="route_submit" style="display: flex; flex-direction: column;">
+    <form method="post" name="address_form" onsubmit="return required()" action="route_submit" style="display: flex; flex-direction: column;">
         <div>
             <nav class="level">
                 <input type="text" class="input" placeholder="Entrer adresse" id="new_waypoint" class="">
-                <button onclick="addNewWaypoint()" button btn-primary" class="button" type="button" id="add-new-waypoint">Ajouter adresse</button>
+                <button onclick="addNewWaypoint()" button btn-primary class="button" type="button" id="add-new-waypoint">Ajouter adresse</button>
             </nav>
         </div>
-        <div style="background: lightgray; min-height: 4rem;" id="waypoint-container" class="is-flex is-flex-direction-column box">
+        <div style="background: lightgray; min-height: 4rem;" name="waypoint-container" id="waypoint-container" class="is-flex is-flex-direction-column box">
         </div>
         <input type="submit" class="button" name="Enter">
     </form>

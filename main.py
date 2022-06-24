@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request
-
 from routing_management import *
 
 
@@ -15,5 +14,12 @@ def home():
 @app.route("/route_submit", methods=["GET", "POST"])
 def routing_form():
     print(request.form)
-    return render_template("login.html")
+    
+    # address_list = []
+    # for i in request.form:
+    #     address_list.append(request.form.get(i))
+    # address_list.remove("Submit")
+    
+    # Make this render good thing
+    return render_template("home.html")
     
