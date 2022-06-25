@@ -1,0 +1,23 @@
+{
+    "waypoints": [
+        {
+            "point": {
+                "latitude": 46.49879,
+                "longitude": -72.73451
+            }
+        },
+        {
+            "point": {
+                "latitude": 46.36639,
+                "longitude": -72.57175
+            }
+        }
+    ],
+    "options": {
+        "travelMode": "car",
+        "vehicleCommercial": false,
+        "waypointConstraints": {
+            "originIndex": 0
+        }
+    }
+}

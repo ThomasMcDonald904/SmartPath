@@ -7,7 +7,7 @@ const addNewWaypoint = (event) => {
     const $container = $('#waypoint-container');
     tomWaypointCounter += 1;
     $container.append(`
-    <div class="field" id="waypoint[${tomWaypointCounter}]">
+    <div class="field" name="waypoint" id="waypoint[${tomWaypointCounter}]">
         <nav class="level">
             <input class="input" type="text" name="waypoint_address[${tomWaypointCounter}]" value="${$elem_address.val()}" readonly>
             <input class="input" type="text" name="waypoint_city[${tomWaypointCounter}]" value="${$elem_city.val()}" readonly>
@@ -49,7 +49,7 @@ function handleChange(is_destination_button) {
 }
 
 function required() {
-    if (document.querySelectorAll('div[id^="waypoint"]').length <= 1) {
+    if (document.getElementsByName("waypoint").length <= 1) {
         alert("Veuillez saisir au moins deux adresses")
         return false
     } 
