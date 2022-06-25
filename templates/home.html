@@ -1,0 +1,33 @@
+<!--Developped by Thomas McDonald in collaboration with Mathys Marcouiller-->
+<!--Github: https://github.com/ThomasMcDonald904 -->
+
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Path</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../static/script_magic.js"></script>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/65babeb850.js" crossorigin="anonymous"></script>
+</head>
+<body class="container is-max-desktop">
+    <h1 class="title is-2">Smart Path</h1>
+    <form method="post" name="address_form" onsubmit="return required()" action="route_submit" style="display: flex; flex-direction: column;">
+        <div>
+            <nav class="level">
+                <input type="text" class="input" placeholder="Entrer adresse" id="new_waypoint_address">
+                <input type="text" class="input", placeholder="Entrer ville de l'adresse" id="new_waypoint_city">
+                <button onclick="addNewWaypoint()" button btn-primary class="button" type="button" id="add-new-waypoint">Ajouter adresse</button>
+            </nav>
+        </div>
+        <div style="background: lightgray; min-height: 4rem;" id="waypoint-container" class="is-flex is-flex-direction-column box">
+        </div>
+        <input type="submit" class="button">
+    </form>
+</body>
+</html>

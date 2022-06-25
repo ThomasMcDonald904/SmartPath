@@ -1,49 +1,44 @@
-# Developped by Thomas McDonald
-# GitHub: https://github.com/ThomasMcDonald904
+from flask import Flask, render_template, request
+from routing_management import *
+from flask_cors import CORS, cross_origin
 
-import requests
-import urllib.parse
+app = Flask(__name__, template_folder='templates/')
+CORS(app)
 
-tomtom_api_key = "NGGuMr6A0UbNGS8ZB1egkfviHxZ4ki2W"
-
-address1 = "3665 rue Léonard"
-address2 = "904 rue Arthur-McNicoll"
-
-city = "Trois-Rivières"
-
-
-def address_to_lonlat(_address: str, _city: str, api_key=tomtom_api_key):
-    url_encoded_address = urllib.parse.quote(_address)
-    api_call_geocode = f"https://api.tomtom.com/search/2/geocode/{url_encoded_address}.json?storeResult=false&countrySet=Canada&view=Unified&key={api_key}"
-
-    response = requests.request("GET", api_call_geocode)
-    data = response.json()
-
-    for i in data["results"]:
-        if i["type"] == "Point Address" and i["address"]["municipality"] == _city:
-            user_address_lon_lat = i["position"]
-
-    formatted_lon_lat = urllib.parse.quote(f"{user_address_lon_lat['lat']},{user_address_lon_lat['lon']}")
-    return formatted_lon_lat
+@cross_origin
+@app.route("/")
+def home():
+    # print(get_route(address_to_lonlat("904 rue Arthur-McNicoll", "Shawinigan"), address_to_lonlat("1029 rue Notre-Dame", "Champlain")))
+    return render_template("home.html")
 
 
-def lon_lat_to_address(lon_lat_dict, api_key=tomtom_api_key):
-    lon_lat_pair = ",".join([str(lon_lat_dict["latitude"]), str(lon_lat_dict["longitude"])])
-    lon_lat_pair_encoded = urllib.parse.quote(lon_lat_pair)
-    api_call_reverse_geocode = f"https://api.tomtom.com/search/2/reverseGeocode/crossStreet/{lon_lat_pair_encoded}.json?returnSpeedLimit=false&radius=10000&returnRoadUse=false&callback=cb&allowFreeformNewLine=false&returnMatchType=false&view=Unified&key={api_key}"
-    response = requests.request("GET", api_call_reverse_geocode)
-    data = response.json()
-    return data
+@cross_origin
+@app.route("/route_submit", methods=["GET", "POST"])
+def routing_form():
+    starting_address = request.form.get("is_starting_destination")
+    temp_form = list(request.form.items())
+    temp_form = [item for item in temp_form if not item[0] == "is_starting_destination" and not item[0] == "Enter"]
+    length = len(temp_form)
+    address_city_pairs = [[temp_form[i][1], temp_form[i+1][1]] for i in range(0, length-1, 2)] 
 
+    for pair in address_city_pairs:
+        if pair[0] == starting_address:
+            starting_address = [starting_address, pair[1]]
 
-def get_route(*formatted_addresses, api_key=tomtom_api_key):
-    address_list = "%3A".join(formatted_addresses)
-    api_call_route = f"https://api.tomtom.com/routing/1/calculateRoute/{address_list}/json?instructionsType=text&computeBestOrder=true&key={api_key}"
-    response = requests.request("GET", api_call_route)
-    print(response)
-    data = response.json()
-    return data
+    address_city_pairs.remove(starting_address)
+    address_city_pairs.insert(0, starting_address)
 
+    waypoint_list = []
+    for pair in address_city_pairs:
+        waypoint_list.append(address_to_lonlat(pair[0], pair[1]))
 
-print(get_route(address_to_lonlat(address1, "Trois-Rivières"), address_to_lonlat(address2, "Shawinigan")))
-# print(lon_lat_to_address({'latitude': 46.32796, 'longitude': -72.59693}))
+    json_data = generate_waypoints_json(*waypoint_list)
+
+    with open('tempdata/json_waypoints.json', 'w') as json_file:
+        json_file.write(json_data)
+
+    with open("tempdata/json_waypoints.json", "r") as json_file:
+        route = get_route(json_file)
+
+    return route
+    
