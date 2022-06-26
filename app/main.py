@@ -8,7 +8,6 @@ CORS(app)
 @cross_origin
 @app.route("/")
 def home():
-    # print(get_route(address_to_lonlat("904 rue Arthur-McNicoll", "Shawinigan"), address_to_lonlat("1029 rue Notre-Dame", "Champlain")))
     return render_template("home.html")
 
 
