@@ -37,7 +37,7 @@ def routing_form():
         json_file.write(json_data)
 
     with open("tempdata/json_waypoints.json", "r") as json_file:
-        route = get_route(json_file)
+        route = routing_management.get_route(json_file)
 
     return route
     
