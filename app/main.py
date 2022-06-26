@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from routing_management import *
+import routing_management
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__, template_folder='templates/')
@@ -29,9 +29,9 @@ def routing_form():
 
     waypoint_list = []
     for pair in address_city_pairs:
-        waypoint_list.append(address_to_lonlat(pair[0], pair[1]))
+        waypoint_list.append(routing_management.address_to_lonlat(pair[0], pair[1]))
 
-    json_data = generate_waypoints_json(*waypoint_list)
+    json_data = routing_management.generate_waypoints_json(*waypoint_list)
 
     with open('tempdata/json_waypoints.json', 'w') as json_file:
         json_file.write(json_data)
