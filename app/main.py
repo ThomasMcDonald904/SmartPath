@@ -1,6 +1,4 @@
-from flask import Flask, render_template, request
-import routing_management
-from flask_cors import CORS, cross_origin
+from init import *
 
 app = Flask(__name__, template_folder='templates/')
 CORS(app)
