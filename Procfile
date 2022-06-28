@@ -1,1 +1,1 @@
-web: gunicorn --preload -b 0.0.0.0:5000 wsgi:app
+web: gunicorn --preload wsgi:app
