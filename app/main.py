@@ -78,8 +78,7 @@ def lon_lat_to_address(lon_lat_dict, api_key=tomtom_api_key):
     return data
 
 def generate_waypoints_json(*waypoints):
-    # data = {"waypoints": [point for point in waypoints], "options": {"travelMode": "car", "vehicleCommercial": False, "waypointConstraints": {"originIndex": 0}}}
-    data = {"waypoints": [point for point in waypoints], "options": {"travelMode": "car", "vehicleCommercial": False}}
+    data = {"waypoints": [point for point in waypoints], "options": {"travelMode": "car", "vehicleCommercial": False, "waypointConstraints": {"originIndex": 0}}}
     json_data = json.dumps(data, indent=4)
     return json_data
 
