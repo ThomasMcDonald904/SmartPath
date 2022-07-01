@@ -74,7 +74,7 @@ def lon_lat_to_address(lon_lat_dict, api_key=tomtom_api_key):
     lon_lat_pair_encoded = urllib.parse.quote(lon_lat_pair)
     api_call_reverse_geocode = f"https://api.tomtom.com/search/2/reverseGeocode/crossStreet/{lon_lat_pair_encoded}.json?returnSpeedLimit=false&radius=10000&returnRoadUse=false&callback=cb&allowFreeformNewLine=false&returnMatchType=false&view=Unified&key={api_key}"
     response = requests.request("GET", api_call_reverse_geocode)
-    data = response.json()
+    data = response.text
     return data
 
 def generate_waypoints_json(*waypoints):
