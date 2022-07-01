@@ -36,11 +36,12 @@ def routing_form():
 
     json_data = generate_waypoints_json(*waypoint_list)
 
-    with open(r"app\tempdata\json_waypoints.json", "w+") as json_file:
-        json_file.write(json_data)
+    # with open(r"app\tempdata\json_waypoints.json", "w+") as json_file:
+    #     json_file.write(json_data)
 
-    with open(r"app\tempdata\json_waypoints.json", "r") as json_file:
-        route = get_route(json_data=json_data)
+    # with open(r"app\tempdata\json_waypoints.json", "r") as json_file:
+    #     route = get_route(json_file)
+    route = get_route(json_data)
 
     return route
 
