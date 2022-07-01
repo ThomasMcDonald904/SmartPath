@@ -85,7 +85,7 @@ def get_route(json_data, api_key=tomtom_api_key):
     api_call_route = f"http://api.tomtom.com/routing/waypointoptimization/1?key={api_key}"
     headers = {'Content-Type': 'application/json', 'accept': '*/*'}
     response = requests.post(api_call_route, data=json_data, headers=headers)
-    data = response.json()
+    data = response.text
     return data
 
 
