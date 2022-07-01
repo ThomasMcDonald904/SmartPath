@@ -58,7 +58,7 @@ def address_to_lonlat(_address: str, _city: str, api_key=tomtom_api_key):
     api_call_geocode = f"https://api.tomtom.com/search/2/geocode/{url_encoded_address}.json?storeResult=false&countrySet=Canada&view=Unified&key={api_key}"
 
     response = requests.request("GET", api_call_geocode)
-    data = response.json()
+    data = response.text
 
     for i in data["results"]:
         if i["type"] == "Point Address" and i["address"]["municipality"] == _city:
@@ -86,7 +86,7 @@ def get_route(json_data, api_key=tomtom_api_key):
     api_call_route = f"http://api.tomtom.com/routing/waypointoptimization/1?key={api_key}"
     headers = {'Content-Type': 'application/json', 'accept': '*/*'}
     response = requests.post(api_call_route, data=json_data, headers=headers)
-    data = response.json()
+    data = response.text
     return data
 
 
